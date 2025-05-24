@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Judgment Score Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 min-h-screen text-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Game Setup Section -->
+        <div id="gameSetup" class="bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4">Game Setup</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-300">Number of Players (4-8) <span class="text-red-400">*</span></label>
+                    <div class="flex items-center gap-2 mt-1">
+                        <button class="decrease-btn bg-gray-700 px-3 py-1 rounded hover:bg-gray-600 text-gray-200">-</button>
+                        <input type="number" id="playerCount" min="4" max="8" value="4" required
+                               class="block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-center">
+                        <button class="increase-btn bg-gray-700 px-3 py-1 rounded hover:bg-gray-600 text-gray-200">+</button>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300">Maximum Cards per Player <span class="text-red-400">*</span></label>
+                    <div class="flex items-center gap-2 mt-1">
+                        <button class="decrease-btn bg-gray-700 px-3 py-1 rounded hover:bg-gray-600 text-gray-200">-</button>
+                        <input type="number" id="maxCards" min="6" max="13" value="13" required
+                               class="block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-center">
+                        <button class="increase-btn bg-gray-700 px-3 py-1 rounded hover:bg-gray-600 text-gray-200">+</button>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300">Total Rounds (Max 50) <span class="text-red-400">*</span></label>
+                    <div class="flex items-center gap-2 mt-1">
+                        <button class="decrease-btn bg-gray-700 px-3 py-1 rounded hover:bg-gray-600 text-gray-200">-</button>
+                        <input type="number" id="totalRounds" min="1" max="50" value="50" required
+                               class="block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-center">
+                        <button class="increase-btn bg-gray-700 px-3 py-1 rounded hover:bg-gray-600 text-gray-200">+</button>
+                    </div>
+                </div>
+            </div>
+            <div id="playerNames" class="mt-4">
+                <!-- Player name inputs will be dynamically added here -->
+            </div>
+            <button id="startGame" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">
+                Start Game
+            </button>
+        </div>
+
+        <!-- Game Play Section (Hidden initially) -->
+        <div id="gamePlay" class="hidden">
+            <!-- Current Round Info -->
+            <div class="bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-2xl font-bold mb-4">Round <span id="currentRound"></span></h2>
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4">
+                    <span class="text-lg font-medium">Cards per player: <span id="cardsThisRound">7</span></span>
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg font-medium">Trump Suit: <span class="text-red-400">*</span></span>
+                        <select id="trumpSuit" class="rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                            <option value="spade">♠ Spade</option>
+                            <option value="club">♣ Club</option>
+                            <option value="heart">♥ Heart</option>
+                            <option value="diamond">♦ Diamond</option>
+                            <option value="lowest">Lowest</option>
+                            <option value="highest">Highest</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bidding Section -->
+            <div class="bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-bold mb-4">Bidding Phase</h3>
+                <div id="biddingPlayers" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Player bidding cards will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- Scoring Section -->
+            <div class="bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-bold mb-4">Scoring Phase</h3>
+                <div id="scoringPlayers" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Player scoring cards will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- Round Actions -->
+            <div class="flex flex-col sm:flex-row justify-between gap-4">
+                
+            </div>
+        </div>
+
+        <!-- Game Results Section (Hidden initially) -->
+        <div id="gameResults" class="hidden">
+            <div class="bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-2xl font-bold mb-4">Game Results</h2>
+                <div id="leaderboard" class="mb-8">
+                    <!-- Leaderboard will be dynamically added here -->
+                </div>
+                <button id="downloadCSV" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">
+                    Download Results (CSV)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
